@@ -19,4 +19,14 @@ namespace FanucRobot
         Rpr,
         Rstring,
     }
+    public class ResultMessage
+    {
+        public bool isError = false;
+        public string message = string.Empty;
+        public ResultMessage(bool iserror,string msg)
+        {
+            this.isError = iserror;
+            this.message = msg;
+        }
+    }
 }

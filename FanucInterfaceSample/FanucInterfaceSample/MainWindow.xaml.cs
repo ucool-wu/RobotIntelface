@@ -38,7 +38,7 @@ namespace FanucInterfaceSample
         private void ConnectButtonClicked(object sender, RoutedEventArgs e)
         {
             fi = new FanucRobIntelface(this.ipTxt.Text);
-            this.cmdgrid.IsEnabled = fi.Connect();
+            this.cmdgrid.IsEnabled = !fi.Connect().isError;
         }
 
         private void ReadRClicked(object sender, RoutedEventArgs e)
@@ -103,32 +103,36 @@ namespace FanucInterfaceSample
         {
             var startIdx = 101;
             var count = 10;
-            var ret = fi.ReadSdo(startIdx, count);
-            PrintResult($"SDO[{startIdx}-{count + startIdx - 1}]", ret);
+            bool[] data = null;
+            var ret = fi.ReadSdo(startIdx, count,ref data);
+            PrintResult($"SDO[{startIdx}-{count + startIdx - 1}]", data);
         }
 
         private void ReadSdiClicked(object sender, RoutedEventArgs e)
         {
             var startIdx = 101;
             var count = 20;
-            var ret = fi.ReadSdI(startIdx, count);
-            PrintResult($"SDO[{startIdx}-{count + startIdx - 1}]", ret);
+            bool[] data = null;
+            var ret = fi.ReadSdI(startIdx, count,ref data);
+            PrintResult($"SDO[{startIdx}-{count + startIdx - 1}]", data);
         }
 
         private void ReadRdoClicked(object sender, RoutedEventArgs e)
         {
             var startIdx = 1;
             var count = 8;
-            var ret = fi.ReadRdo(startIdx, count);
-            PrintResult($"RDO[{startIdx}-{count + startIdx - 1}]", ret);
+            bool[] data = null;
+            var ret = fi.ReadRdo(startIdx, count,ref data);
+            PrintResult($"RDO[{startIdx}-{count + startIdx - 1}]", data);
         }
 
         private void ReadRdiClicked(object sender, RoutedEventArgs e)
         {
             var startIdx = 1;
             var count = 8;
-            var ret = fi.ReadRdi(startIdx, count);
-            PrintResult($"RDI[{startIdx}-{count + startIdx - 1}]", ret);
+            bool[] data = null;
+            var ret = fi.ReadRdi(startIdx, count,ref data);
+            PrintResult($"RDI[{startIdx}-{count + startIdx - 1}]", data);
         }
 
         private void WriteSdoClicked(object sender, RoutedEventArgs e)
