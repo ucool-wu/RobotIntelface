@@ -1,5 +1,5 @@
 # RobotIntelface
-The unofficial implement of fanuc robot-intelface
+An unofficial implement of fanuc robot-intelface
 # test on
 R-30ib mate robot controller
 # how to use the lib
