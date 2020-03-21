@@ -38,7 +38,10 @@ namespace FanucInterfaceSample
         private void ConnectButtonClicked(object sender, RoutedEventArgs e)
         {
             fi = new FanucRobIntelface(this.ipTxt.Text);
-            this.cmdgrid.IsEnabled = !fi.Connect().isError;
+            var ret = fi.Connect();
+            this.cmdgrid.IsEnabled = !ret.isError;
+
+            txtResult.Text += $"connect -> {!ret.isError}--msg -> {ret.message}\r\n";
         }
 
         private void ReadRClicked(object sender, RoutedEventArgs e)
@@ -104,7 +107,7 @@ namespace FanucInterfaceSample
             var startIdx = 101;
             var count = 10;
             bool[] data = null;
-            var ret = fi.ReadSdo(startIdx, count,ref data);
+            var ret = fi.ReadSdo(startIdx, count, ref data);
             PrintResult($"SDO[{startIdx}-{count + startIdx - 1}]", data);
         }
 
@@ -113,7 +116,7 @@ namespace FanucInterfaceSample
             var startIdx = 101;
             var count = 20;
             bool[] data = null;
-            var ret = fi.ReadSdI(startIdx, count,ref data);
+            var ret = fi.ReadSdI(startIdx, count, ref data);
             PrintResult($"SDO[{startIdx}-{count + startIdx - 1}]", data);
         }
 
@@ -122,7 +125,7 @@ namespace FanucInterfaceSample
             var startIdx = 1;
             var count = 8;
             bool[] data = null;
-            var ret = fi.ReadRdo(startIdx, count,ref data);
+            var ret = fi.ReadRdo(startIdx, count, ref data);
             PrintResult($"RDO[{startIdx}-{count + startIdx - 1}]", data);
         }
 
@@ -131,7 +134,7 @@ namespace FanucInterfaceSample
             var startIdx = 1;
             var count = 8;
             bool[] data = null;
-            var ret = fi.ReadRdi(startIdx, count,ref data);
+            var ret = fi.ReadRdi(startIdx, count, ref data);
             PrintResult($"RDI[{startIdx}-{count + startIdx - 1}]", data);
         }
 

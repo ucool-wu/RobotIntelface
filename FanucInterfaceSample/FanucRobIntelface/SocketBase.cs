@@ -19,7 +19,6 @@ namespace FanucRobot
         }
         protected ResultMessage CreatResult(bool iserr = false, string msg ="")
         {
-            this.connnected = !iserr;
             return new ResultMessage(iserr, msg);
         }
         Socket GetAvailableConn()
@@ -27,10 +26,13 @@ namespace FanucRobot
             if (!connnected)
             {
                 _sc = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                _sc.ReceiveTimeout = 2000;
+                _sc.SendTimeout = 2000;
                 var ar = _sc.BeginConnect(ipAddr, port, null, null);
                 if (ar.AsyncWaitHandle.WaitOne(5000))
                 {
                     _sc.EndConnect(ar);
+                    this.connnected = true;
                 }
                 else
                 {
@@ -51,6 +53,7 @@ namespace FanucRobot
                 }
                 catch
                 {
+                    this.connnected = false;
                     CreatResult(true, "socket error : send time out.");
                 }
                 return CreatResult();
@@ -76,6 +79,7 @@ namespace FanucRobot
                 }
                 catch
                 {
+                    this.connnected = false;
                     return CreatResult(true, "socket error : read time out.");
                 }
                 return CreatResult();
